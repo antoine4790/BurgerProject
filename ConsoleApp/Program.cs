@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Dal;
+using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace ConsoleApp
 {
@@ -6,7 +8,16 @@ namespace ConsoleApp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            using (var context = new BurgerContext())
+            {
+                context.Initialize(true);
+
+                foreach (var item in context.Products.AsNoTracking())
+                {
+                    Console.WriteLine($"{item.Name} {item.Price}");
+                }
+
+            }
         }
     }
 }
