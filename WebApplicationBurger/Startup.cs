@@ -27,6 +27,8 @@ namespace WebApplicationBurger
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IBeverageRepository, BeverageRepository>();
+
             services.AddDbContext<BurgerContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("BurgerDb"))
             );
