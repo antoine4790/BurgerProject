@@ -37,9 +37,20 @@ namespace WebApplicationBurger.Controllers
                 return BadRequest();
         }
 
-        public IActionResult Delete()
+        public async Task<IActionResult> Delete(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var beverage = await _beverageRepository.GetBeverage(id);
+            if (beverage == null)
+            {
+                return NotFound();
+            }
+
+            return View(beverage);
         }
 
         [HttpPost]
