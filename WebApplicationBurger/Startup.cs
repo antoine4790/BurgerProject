@@ -10,7 +10,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApplicationBurger.Binders;
 using WebApplicationBurger.Repositories;
+using WebApplicationBurger.Services;
 
 namespace WebApplicationBurger
 {
@@ -28,6 +30,14 @@ namespace WebApplicationBurger
         {
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IBeverageRepository, BeverageRepository>();
+            services.AddScoped<IMenuRepository, MenuRepository>();
+
+            services.AddTransient<MenuService>();
+
+            services.AddControllersWithViews(conf =>
+            {
+                conf.ModelBinderProviders[4] = new FloatingTypeModelBinderProvider();
+            });
 
             services.AddDbContext<BurgerContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("BurgerDb"))
